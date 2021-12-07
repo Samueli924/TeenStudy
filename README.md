@@ -1,29 +1,30 @@
 # Samueli924/TeenStudy 青春湖北(青年大学习)
 
-## 使用方法
+:star: 觉得有帮助的朋友可以给个**Star**
 
-### 第一步 准备代码需要的数据
+## :point_up: 更新通知
 
-#### 1.1 抓取微信公众号的openid
+20211207初次更新内容：完成了项目的基础功能，一键自动化完成青年大学习任务  
 
-	openid是微信每个独立的公众号对于用户的一个唯一标识,在后续代码中用于身份认证
+## :books: 使用方法
 
-<b>获取步骤(Fiddler抓包)<b>  
+[使用教程](https://blog.samuelchen.cn/archives/teenstudy-01)  
 
-	1.1.1 自行配置好Fiddler后开始抓包  
+## :question: 反馈方式  
 
-	1.1.2 打开公众号登录页面  
+想要交流脚本运行或运行有问题需要提问的朋友可以选择加入Telegram群聊，我会在群聊中尽量尽快回复你的消息  
 
-![Snipaste_2021-12-07_13-53-30](https://user-images.githubusercontent.com/65054820/144975543-8377215c-0c08-4548-8e28-b73f1db64c24.png)  
-	
-	1.1.3 在Fiddler抓包页面中找到这个请求  
-![Snipaste_2021-12-07_13-54-00](https://user-images.githubusercontent.com/65054820/144975566-35ea335d-8c7b-4174-88ca-9f2daff6555a.png)  
 
-	1.1.4 在请求详情中可以看到你的独立openid
-![Snipaste_2021-12-07_14-00-37](https://user-images.githubusercontent.com/65054820/144975584-f723a842-6eea-4296-804a-bcc8cdcf85e1.png)  
+[点此加入群聊](https://t.me/samueli924)
 
-	1.1.5 复制你的openid，保存到本地，稍后需要用到  
-	
-----
+## :question: TODO(项目计划)
 
-#### 1.2 openid
+1. 实现返回截图(使用Github Pages/腾讯云云函数/自有云服务器部署)
+2. 实现Telegram命令启动，使用/learn命令执行相关代码
+3. 实现Telegram消息反馈，将运行结果反馈至Telegram中
+
+
+## :warning: 免责声明
+- 本代码遵循 [GPL-3.0 License](https://github.com/Samueli924/TeenStudy/blob/main/LICENSE)协议，允许**开源/免费使用和引用/修改/衍生代码的开源/免费使用**，不允许**修改和衍生的代码作为闭源的商业软件发布和销售**，禁止**使用本代码盈利**，以此代码为基础的程序**必须**同样遵守[GPL-3.0 License](https://github.com/Samueli924/chaoxing/blob/main/LICENSE)协议  
+- 本代码仅用于**学习讨论**，禁止**用于盈利**
+- 他人或组织使用本代码进行的任何**违法行为**与本人无关
