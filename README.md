@@ -10,8 +10,7 @@
 	
 ----
 
-<b>获取步骤<b>
-1. Fiddler抓包
+<b>获取步骤(Fiddler抓包)<b>
 	自行配置好Fiddler后开始抓包
 	打开公众号登录页面  
 	![Snipaste_2021-12-07_13-53-30](https://user-images.githubusercontent.com/65054820/144975543-8377215c-0c08-4548-8e28-b73f1db64c24.png)  
@@ -23,7 +22,7 @@
 	
 ----
 
-2. 
+
 
 
 
