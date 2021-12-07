@@ -17,7 +17,7 @@
 
 [点此加入群聊](https://t.me/samueli924)
 
-## :question: TODO(项目计划)
+## :question: TODO项目计划(预计更新时间2021年12月底)
 
 1. 实现返回截图(使用Github Pages/腾讯云云函数/自有云服务器部署)
 2. 实现Telegram命令启动，使用/learn命令执行相关代码
