@@ -6,9 +6,9 @@
 
 20211207初次更新内容：完成了项目的基础功能，一键自动化完成青年大学习任务  
 
-## :books: 使用方法
+<!-- ## :books: 使用方法
 
-[使用教程](https://blog.samuelchen.cn/archives/teenstudy-01)  
+[使用教程](https://blog.samuelchen.cn/archives/teenstudy-01)   -->
 
 ## :question: 反馈方式  
 
