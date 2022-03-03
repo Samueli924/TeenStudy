@@ -1,10 +1,13 @@
+from urllib.request import urlretrieve
+import PIL.Image as Image
+import io
 import requests
 import requests.utils
 from urllib.parse import quote, unquote
 from bs4 import BeautifulSoup
 
+openid = "xxxxxxxxxxxxxxxx"  # 更改为自己的openid
 
-openid = "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 def show_exit(content):
     """
@@ -22,7 +25,7 @@ def get_code(s):
     :return:
     """
     url = "https://h5.cyol.com/special/weixin/sign.json"
-    headers ={
+    headers = {
         "Host": "h5.cyol.com",
         "Connection": "keep-alive",
         "Accept": "application/json, text/javascript, */*; q=0.01",
@@ -35,7 +38,7 @@ def get_code(s):
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     }
-    resp = s.get(url,headers=headers).json()
+    resp = s.get(url, headers=headers).json()
     return list(resp)[-1]
 
 
@@ -56,7 +59,7 @@ def get_user(s):
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     }
-    url = "https://api.fjg360.cn/index.php?m=vote&c=index&a=get_members&openid="+ openid
+    url = "https://api.fjg360.cn/index.php?m=vote&c=index&a=get_members&openid=" + openid
     resp = s.get(url, headers=headers).json()
     if resp.get("code") == 1:
         return resp.get("h5_ask_member")
@@ -64,7 +67,7 @@ def get_user(s):
         show_exit("您的OPENID配置有误，请检查后重试")
 
 
-def get_course(s,code):
+def get_course(s, code):
     headers = {
         "Host": "h5.cyol.com",
         "Connection": "keep-alive",
@@ -75,9 +78,9 @@ def get_course(s,code):
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     }
-    url = 'https://h5.cyol.com/special/daxuexi/'+ code +'/m.html'
-    resp = s.get(url,headers=headers)
-    soup = BeautifulSoup(resp.content.decode("utf8"),"lxml")
+    url = 'https://h5.cyol.com/special/daxuexi/' + code + '/m.html'
+    resp = s.get(url, headers=headers)
+    soup = BeautifulSoup(resp.content.decode("utf8"), "lxml")
     course = soup.title.string[7:]
     return course
 
@@ -109,11 +112,61 @@ def save_door(info, course, s):
     url += "&openid=" + openid
     url += "&num=10"
     url += "&lesson_name=" + course
-    resp = s.get(url,headers=headers).json()
+    resp = s.get(url, headers=headers).json()
     if resp.get("code") == 1:
         return True
     else:
         show_exit("您的用户信息有误，请检查后重试")
+
+
+def get_finish_pic(code):
+    """
+    通过调用dxx青年大学习的公众号服务来获取图片
+    :param code:
+    :return: None:
+    """
+    base_url = "https://h5.cyol.com/special/daxuexi/"
+    base_url += code
+    base_url += "/images/end.jpg"
+
+    urlretrieve(base_url, "finish.jpg")
+
+
+def get_user_info_pic(course, name, id, company):
+    """
+    获取用户信息相关截图
+    :param id:
+    :param name:
+    :param course:
+    :param company:
+    :return: None:
+    """
+    req_url = "http://124.222.5.227:8080?course="  # 不要更改 这是我服务器上提供的图片生成页面
+    req_url += str(course)
+    req_url += "&name=" + str(name)
+    req_url += "&id=" + str(id)
+    req_url += "&company=" + str(company)
+
+    data = {
+        'url': req_url,
+        'token': 'xxxxxxxxxxx',  # 需替换为自己的screenshotmaster api token
+        'width': '828',  # 此大小与青年大学习提供的完成图片大小一致
+        'height': '1366',
+        'delay': '50',
+        'device': 'mobile'
+    }
+
+    r = requests.post("https://www.screenshotmaster.com/api/v1/screenshot", data=data)
+    print(r.content)
+
+    if r.status_code == 422:
+        show_exit("token无效")
+    elif r.status_code != 200:
+        show_exit("图片获取出错")
+
+    img = Image.open(io.BytesIO(r.content))
+    img = img.convert("RGB")
+    img.save("personal_info.jpg")
 
 
 def run():
@@ -122,6 +175,10 @@ def run():
     user_info = get_user(s)
     course = get_course(s, code)
     save_door(user_info, course, s)
+
+    get_finish_pic(code)
+    get_user_info_pic(course, user_info["name"], user_info["uid"],
+                      user_info["danwei1"] + user_info["danwei2"] + user_info["danwei3"])
 
 
 if __name__ == '__main__':
